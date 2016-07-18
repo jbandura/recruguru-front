@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'recruguru-front',
+    podModulePrefix: 'recruguru-front/pods',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
