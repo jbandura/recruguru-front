@@ -1,0 +1,18 @@
+{{#lf-form rules=rules onSubmit=(action onSubmit formData) as |v formValid|}}
+  {{lf-input
+    type="text"
+    name="login"
+    class="js-login form-control"
+    on-update=(action (mut formData.login))
+    validate=v
+  }}
+  {{lf-input
+    type="password"
+    name="password"
+    class="js-password form-control"
+    on-update=(action (mut formData.password))
+    validate=v
+  }}
+
+  <button type="submit" disabled={{not formValid}}>Submit</button>
+{{/lf-form}}
