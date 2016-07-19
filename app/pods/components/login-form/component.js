@@ -4,8 +4,8 @@ const { Component } = Ember;
 
 export default Component.extend({
   rules: {
-    login: 'required',
-    password: 'required'
+    login: 'required|email',
+    password: 'required|min(8)'
   },
   formData: {
     login: null,

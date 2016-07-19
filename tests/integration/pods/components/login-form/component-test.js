@@ -36,3 +36,28 @@ test('when button clicked proper action gets fired', function(assert) {
   this.$('form').trigger('submit');
 });
 
+test('it shows error if any of the fields blank', function(assert) {
+  setup(this);
+  fillInBlurIntegration(this, '.js-login', '');
+  fillInBlurIntegration(this, '.js-password', '');
+  assert.ok(this.$('.js-login').hasClass('has-error'), 'it shows error for login (blank)');
+  assert.ok(this.$('.js-password').hasClass('has-error'), 'it shows error for password (blank)');
+  fillInBlurIntegration(this, '.js-login', 'johnasdasd');
+  assert.ok(
+    this.$('.js-login').hasClass('has-error'),
+    'it shows error for login (not email)'
+  );
+  fillInBlurIntegration(this, '.js-login', 'john@example.com');
+  assert.notOk(
+    this.$('.js-login').hasClass('has-error'),
+    'it shows no errors when login field filled in correctly'
+  );
+  fillInBlurIntegration(this, '.js-password', 'foo');
+  assert.ok(this.$('.js-password').hasClass('has-error'), 'it shows error when password shorter than 8 characters');
+  fillInBlurIntegration(this, '.js-password', 'foobarbaz');
+  assert.notOk(this.$('.js-password').hasClass('has-error'), 'it shows no errors when password form filled in correctly');
+  assert.notOk(
+    this.$('button[type=submit]').is(':disabled'),
+    'if the form is properly filled in the submit btn is enabled'
+  );
+});
