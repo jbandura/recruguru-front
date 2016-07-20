@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'recruguru-front/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'recruguru-front/tests/helpers/ember-simple-auth';
 import { fillInBlurAcceptance } from 'recruguru-front/tests/helpers/ember-legit-forms';
+import { Response } from 'ember-cli-mirage';
 
 let application;
 moduleForAcceptance('Acceptance | auth', {
@@ -45,5 +46,22 @@ test('it allows logging in', function(assert) {
   andThen(() => {
     assert.equal(currentURL(), '/');
     assert.ok(find('.alert.alert-success').length, 'success message is displayed');
+  });
+});
+
+test('it shows an error message when 500 returned from the server', function(assert) {
+  assert.expect(1);
+  visit('/login');
+  server.post('/api/v1/sessions', function() {
+    return new Response(500, {}, {errors: 'foo'});
+  });
+
+  andThen(() => {
+    fillInBlurAcceptance('.js-login', 'johndoe@example.com');
+    fillInBlurAcceptance('.js-password', 'foobarbaz');
+    click('button[type=submit]');
+  });
+  andThen(() => {
+    assert.ok(find('.alert.alert-danger').length, 'error message is displayed');
   });
 });

@@ -11,7 +11,8 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       this.get('session').authenticate('authenticator:devise', login, password).then(() => {
         this.get('flashMessages').success('Logged in successfully!');
       }).catch((reason) => {
-        this.set('errorMessage', reason.error || reason);
+        const msg = reason ? reason.errors : 'There was a problem while logging in';
+        this.get('flashMessages').danger(msg);
       });
     }
   }
