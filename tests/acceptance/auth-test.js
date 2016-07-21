@@ -28,7 +28,7 @@ test('it allows access for authenticated users', function(assert) {
 test('it allows logging in', function(assert) {
   assert.expect(5);
   visit('/login');
-  server.post('/api/v1/sessions', function(_, request) {
+  server.post('/sessions', function(_, request) {
     const [ password, login ] = decodeURIComponent(request.requestBody)
                                 .replace(/user\[(email|password)\]=/g, '')
                                 .split('&');

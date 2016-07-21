@@ -1,0 +1,17 @@
+{{#lf-form rules=rules onSubmit=(action onSubmit formData) as |v formValid|}}
+  {{lf-input
+    label="Title"
+    name="title"
+    class="js-title"
+    validate=v
+    on-update=(action (mut formData.title))
+  }}
+  {{lf-input
+    label="Icon"
+    name="icon"
+    class="js-icon"
+    validate=v
+    on-update=(action (mut formData.icon))
+  }}
+  <button type="submit" disabled={{not formValid}}>Save</button>
+{{/lf-form}}

@@ -1,0 +1,14 @@
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each categories as |category|}}
+    <tr class="js-category">
+      <td>{{category.title}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
