@@ -11,7 +11,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     const category = this.store.createRecord('category', {
       title: formData.title,
       icon: formData.icon,
-      userId: this.get('session.data.authenticated.user_id')
+      userId: this.get('session.currentUser.id')
     });
     try {
       yield category.save();

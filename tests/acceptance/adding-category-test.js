@@ -3,12 +3,13 @@ import { Response } from 'ember-cli-mirage';
 import moduleForAcceptance from 'recruguru-front/tests/helpers/module-for-acceptance';
 import { fillInBlurAcceptance } from 'recruguru-front/tests/helpers/ember-legit-forms';
 import { authenticateSession } from 'recruguru-front/tests/helpers/ember-simple-auth';
+import Ember from 'ember';
 
 const userId = 1;
 
 moduleForAcceptance('Acceptance | adding a category', {
   beforeEach() {
-    authenticateSession(this.application, { user_id: userId});
+    authenticateSession(this.application, { currentUser: Ember.Object.create({ id: userId }) });
   }
 });
 

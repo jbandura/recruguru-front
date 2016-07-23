@@ -1,0 +1,37 @@
+import { moduleFor, test } from 'ember-qunit';
+import Ember from 'ember';
+
+moduleFor('ability:category', 'Unit | Ability | category');
+
+test('it allows editing for the author of category', function(assert) {
+  const ability = this.subject();
+  ability.setProperties({
+    model: Ember.Object.create({ userId: 3 }),
+    session: {
+      currentUser: Ember.Object.create({ id: 3, isAdmin: false })
+    }
+  });
+  assert.ok(ability.get('canEdit'));
+});
+
+test('it doesnt allow editing for other users', function(assert) {
+  const ability = this.subject();
+  ability.setProperties({
+    model: Ember.Object.create({ userId: 3 }),
+    session: {
+      currentUser: Ember.Object.create({ id: 5, isAdmin: false })
+    }
+  });
+  assert.notOk(ability.get('canEdit'));
+});
+
+test('it allows editing of others post if youre admin', function(assert) {
+  const ability = this.subject();
+  ability.setProperties({
+    model: Ember.Object.create({ userId: 3 }),
+    session: {
+      currentUser: Ember.Object.create({ id: 5, isAdmin: true })
+    }
+  });
+  assert.ok(ability.get('canEdit'));
+});
