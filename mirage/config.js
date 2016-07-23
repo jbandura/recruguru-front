@@ -1,5 +1,15 @@
 export default function() {
 
+  this.namespace = '/api/v1';
+
+  //
+  // CATEGORIES
+  //
+
+  this.get('/categories');
+  this.get('/categories/:id');
+  this.post('/categories');
+  this.put('/categories/:id');
   // These comments are here to help you get started. Feel free to delete them.
 
   /*

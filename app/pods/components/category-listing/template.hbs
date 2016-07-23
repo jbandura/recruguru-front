@@ -1,0 +1,27 @@
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each categories as |category|}}
+    <tr class="js-category">
+      <td>{{category.title}}</td>
+      <td>
+        {{#if (can 'edit category' model=category)}}
+          {{link-to 'Edit' 'categories.edit' category.id class="js-edit-btn"}}
+        {{/if}}
+      </td>
+      <td>
+        {{#if (can 'delete category' model=category)}}
+          {{#hold-button type="rectangle" class="js-delete-btn" action=(action onDeleteCategory category)}}
+            Hold to delete
+          {{/hold-button}}
+        {{/if}}
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

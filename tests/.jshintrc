@@ -22,7 +22,12 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "ok",
+    "equal",
+    "expect",
+    "deepEqual",
+    "notOk"
   ],
   "node": false,
   "browser": false,
