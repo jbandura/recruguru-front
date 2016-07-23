@@ -38,3 +38,33 @@ test('edit button is shown only for the owned resources', function(assert) {
   assert.ok(find('.js-category:nth(5) .js-edit-btn').length);
 });
 
+test('as a non admin I dont see any delete buttons', function(assert) {
+  assert.notOk(find('.js-delete-btn').length);
+});
+
+test('as an admin I can see delete buttons', function(assert) {
+  authenticateSession(this.application, { currentUser: Ember.Object.create({
+    isAdmin: true
+  })});
+  visit('/categories');
+
+  andThen(() => {
+    assert.ok(find('.js-delete-btn').length);
+  });
+});
+
+test('when clicking on delete button a proper request gets sent', function(assert) {
+  assert.expect(1);
+  const categoryToDelete = categories[0];
+  server.del(`/categories/${categoryToDelete.id}`, () => {
+    assert.ok(true, 'request gets sent');
+  });
+  authenticateSession(this.application, { currentUser: Ember.Object.create({
+    isAdmin: true
+  })});
+  visit('/categories');
+
+  andThen(() => {
+    triggerEvent('.js-delete-btn:nth(0)', 'mousedown');
+  });
+});

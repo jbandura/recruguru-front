@@ -14,6 +14,13 @@
           {{link-to 'Edit' 'categories.edit' category.id class="js-edit-btn"}}
         {{/if}}
       </td>
+      <td>
+        {{#if (can 'delete category' model=category)}}
+          {{#hold-button type="rectangle" class="js-delete-btn" action=(action onDeleteCategory category)}}
+            Hold to delete
+          {{/hold-button}}
+        {{/if}}
+      </td>
     </tr>
   {{/each}}
   </tbody>

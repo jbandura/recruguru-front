@@ -35,3 +35,21 @@ test('it allows editing of others post if youre admin', function(assert) {
   });
   assert.ok(ability.get('canEdit'));
 });
+
+test('it allows deleting of posts only for admins', function(assert) {
+  const ability = this.subject();
+  ability.setProperties({
+    model: Ember.Object.create({ userId: 3 }),
+    session: {
+      currentUser: Ember.Object.create({ id: 5, isAdmin: true })
+    }
+  });
+  assert.ok(ability.get('canDelete'), 'as admin I can delete category');
+  ability.setProperties({
+    model: Ember.Object.create({ userId: 3 }),
+    session: {
+      currentUser: Ember.Object.create({ id: 3, isAdmin: false })
+    }
+  });
+  assert.notOk(ability.get('canDelete'), 'as non admin I cannot delete category');
+});

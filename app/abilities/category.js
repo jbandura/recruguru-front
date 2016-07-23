@@ -8,5 +8,10 @@ export default Ability.extend({
   canEdit: computed('session.currentUser', function() {
     const user = this.get('session.currentUser');
     return user.isAdmin || user.id === this.get('model.userId');
+  }),
+
+  canDelete: computed('session.currentUser', function() {
+    const user = this.get('session.currentUser');
+    return user.isAdmin;
   })
 });
