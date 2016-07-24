@@ -7,7 +7,12 @@
       <a class="navbar-brand" href="#">Recruguru</a>
     </div>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Home</a></li>
+      <li>
+        {{link-to 'Home' 'index'}}
+      </li>
+      <li>
+        {{link-to 'Categories' 'categories.index'}}
+      </li>
     </ul>
   </div> <!-- /.container-fluid -->
 </nav> <!-- /.navbar -->

@@ -1,0 +1,27 @@
+{{#lf-form rules=rules onSubmit=(action onSubmit formData) as |v formValid|}}
+  {{lf-input
+    name="title"
+    class="js-title"
+    validate=v
+    on-update=(action (mut formData.title))
+  }}
+  {{lf-textarea
+    name="content"
+    class="js-content"
+    validate=v
+    on-update=(action (mut formData.content))
+  }}
+  <div class="js-content-preview">
+    {{md-text text=formData.content}}
+  </div>
+  {{lf-textarea
+    name="solution"
+    class="js-solution"
+    on-update=(action (mut formData.solution))
+    validate=v
+  }}
+  <div class="js-solution-preview">
+    {{md-text text=formData.solution}}
+  </div>
+  <button type="submit" class="btn btn-primary" disabled={{not formValid}}>Save</button>
+{{/lf-form}}

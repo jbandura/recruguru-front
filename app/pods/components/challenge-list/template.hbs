@@ -1,0 +1,8 @@
+{{link-to 'Add new' 'challenges.new' class="js-add btn btn-primary"}}
+
+{{#each challenges as |challenge|}}
+  <div class="js-challenge">
+    <div class="js-title">{{challenge.title}}</div>
+    {{link-to 'Show' 'challenges.show' challenge.id class="js-show"}}
+  </div>
+{{/each}}

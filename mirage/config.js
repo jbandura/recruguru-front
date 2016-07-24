@@ -10,6 +10,15 @@ export default function() {
   this.get('/categories/:id');
   this.post('/categories');
   this.put('/categories/:id');
+
+  //
+  // CHALLENGES
+  //
+
+  this.get('/challenges');
+  this.get('/challenges/:id');
+  this.post('/challenges');
+  this.put('/challenges/:id');
   // These comments are here to help you get started. Feel free to delete them.
 
   /*

@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th></th>
+      <th colspan="2"></th>
     </tr>
   </thead>
   <tbody>
@@ -11,7 +11,7 @@
       <td>{{category.title}}</td>
       <td>
         {{#if (can 'edit category' model=category)}}
-          {{link-to 'Edit' 'categories.edit' category.id class="js-edit-btn"}}
+          {{link-to 'Edit' 'categories.edit' category.id class="js-edit-btn btn btn-default"}}
         {{/if}}
       </td>
       <td>
