@@ -6,7 +6,8 @@ export default Component.extend({
   formData: {
     title: '',
     content: '',
-    challenge: ''
+    challenge: '',
+    category: null
   },
   rules: {
     sharedValidations: {

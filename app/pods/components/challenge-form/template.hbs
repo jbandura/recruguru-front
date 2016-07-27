@@ -1,4 +1,15 @@
 {{#lf-form rules=rules onSubmit=(action onSubmit formData) as |v formValid|}}
+  <p class="js-category">
+    {{#power-select
+      options=categories
+      placeholder='Select a category'
+      selected=formData.category
+      onchange=(action (mut formData.category))
+      as |category|
+    }}
+      {{category.title}}
+    {{/power-select}}
+  </p>
   {{lf-input
     name="title"
     class="js-title"

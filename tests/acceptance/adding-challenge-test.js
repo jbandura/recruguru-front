@@ -9,7 +9,11 @@ const authAndVisit = (app) => {
   visit('/challenges/new');
 };
 
-moduleForAcceptance('Acceptance | adding challenge');
+moduleForAcceptance('Acceptance | adding challenge', {
+  beforeEach() {
+    server.createList('category', 5);
+  }
+});
 
 test('route exists', function(assert) {
   authAndVisit(this.application);
@@ -36,7 +40,7 @@ test('inputs are displayed', function(assert){
 });
 
 test('when form submitted proper request gets fired', function(assert) {
-  assert.expect(3);
+  assert.expect(4);
   const values = {
     title: 'Title',
     content: 'Content',
@@ -48,12 +52,14 @@ test('when form submitted proper request gets fired', function(assert) {
     assert.equal(data.title, values.title);
     assert.equal(data.content, values.content);
     assert.equal(data.solution, values.solution);
+    assert.equal(data.category_id, server.db.categories[0].id);
   });
   andThen(() => {
     fillInBlurAcceptance(`.js-title`, values.title);
     ['solution', 'content'].forEach((field) => {
       fillInBlurAcceptance(`.js-${field}`, values[field], 'textarea');
     });
+    selectChoose('.js-category', server.db.categories[0].title);
     click('button[type=submit]');
   });
 });

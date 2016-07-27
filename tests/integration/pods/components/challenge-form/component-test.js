@@ -35,14 +35,6 @@ test('it shows markdown preview for solution', function(assert) {
 });
 
 test('it validates title input', function(assert) {
-  this.render(hbs `{{challenge-form onSubmit=(action onSubmit)}}`);
-  fillInBlurIntegration(this, '.js-title', '');
-  assert.ok(this.$('.js-title').hasClass('has-error'));
-  fillInBlurIntegration(this, '.js-title', 'Title');
-  assert.notOk(this.$('.js-title').hasClass('has-error'));
-});
-
-test('it validates title input', function(assert) {
   validateRequired(this, assert, '.js-title');
 });
 
