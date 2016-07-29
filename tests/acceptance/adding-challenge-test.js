@@ -76,6 +76,7 @@ test('when form submitted it redirects to main page with flash message', functio
     ['solution', 'content'].forEach((field) => {
       fillInBlurAcceptance(`.js-${field}`, values[field], 'textarea');
     });
+    selectChoose('.js-category', server.db.categories[0].title);
     click('button[type=submit]');
   });
   andThen(() => {
@@ -99,6 +100,7 @@ test('when server returns an error a proper message gets displayed', function(as
     ['solution', 'content'].forEach((field) => {
       fillInBlurAcceptance(`.js-${field}`, values[field], 'textarea');
     });
+    selectChoose('.js-category', server.db.categories[0].title);
     click('button[type=submit]');
   });
   andThen(() => {

@@ -27,7 +27,8 @@
     "equal",
     "expect",
     "deepEqual",
-    "notOk"
+    "notOk",
+    "selectChoose"
   ],
   "node": false,
   "browser": false,

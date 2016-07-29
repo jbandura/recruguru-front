@@ -11,7 +11,7 @@ export default Component.extend({
   },
   rules: {
     sharedValidations: {
-      required: w('title content solution')
+      required: w('category title content solution')
     }
   }
 });
