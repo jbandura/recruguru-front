@@ -4,5 +4,10 @@
   <div class="js-challenge">
     <div class="js-title">{{challenge.title}}</div>
     {{link-to 'Show' 'challenges.show' challenge.id class="js-show"}}
+    {{#if (can 'delete challenge' model=challenge)}}
+      {{#hold-button type="rectangle" class="js-delete-btn" action=(action onDeleteChallenge challenge)}}
+        Hold to delete
+      {{/hold-button}}
+    {{/if}}
   </div>
 {{/each}}

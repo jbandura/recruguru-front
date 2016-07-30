@@ -3,9 +3,14 @@ import moduleForAcceptance from 'recruguru-front/tests/helpers/module-for-accept
 import { authenticateSession, invalidateSession } from 'recruguru-front/tests/helpers/ember-simple-auth';
 import { fillInBlurAcceptance } from 'recruguru-front/tests/helpers/ember-legit-forms';
 import { Response } from 'ember-cli-mirage';
+import Ember from 'ember';
 
 const authAndVisit = (app) => {
-  authenticateSession(app);
+  authenticateSession(app, {
+    currentUser: Ember.Object.create({
+      isAdmin: false
+    })
+  });
   visit('/challenges/new');
 };
 

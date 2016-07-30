@@ -1,2 +1,5 @@
 <h1>Challenges</h1>
-{{challenge-list challenges=model}}
+{{challenge-list
+  challenges=model
+  onDeleteChallenge=(route-action 'onDeleteChallenge')
+}}
