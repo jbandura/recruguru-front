@@ -17,6 +17,7 @@ Router.map(function() {
   this.route('challenges', function() {
     this.route('index', { path: '/' });
     this.route('show', { path: ':challenge_id' });
+    this.route('edit', { path: ':challenge_id/edit' });
     this.route('new');
   });
 });

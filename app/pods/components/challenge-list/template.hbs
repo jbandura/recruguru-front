@@ -9,5 +9,8 @@
         Hold to delete
       {{/hold-button}}
     {{/if}}
+    {{#if (can 'edit challenge' model=challenge)}}
+      {{link-to "Edit" "challenges.edit" challenge.id class="js-edit-btn"}}
+    {{/if}}
   </div>
 {{/each}}

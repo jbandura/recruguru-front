@@ -7,7 +7,7 @@
       label="Category"
       name="category"
       class="js-category"
-      selected=formData.category
+      property=challenge.category
       on-update=(action (mut formData.category))
       validate=v
       as |category|
@@ -19,12 +19,14 @@
     name="title"
     class="js-title"
     validate=v
+    property=challenge.title
     on-update=(action (mut formData.title))
   }}
   {{lf-textarea
     name="content"
     class="js-content"
     validate=v
+    property=challenge.content
     on-update=(action (mut formData.content))
   }}
   <div class="js-content-preview">
@@ -33,6 +35,7 @@
   {{lf-textarea
     name="solution"
     class="js-solution"
+    property=challenge.solution
     on-update=(action (mut formData.solution))
     validate=v
   }}

@@ -6,5 +6,6 @@ export default Model.extend({
   title: attr('string'),
   content: attr('string'),
   solution: attr('string'),
-  category: belongsTo('category')
+  category: belongsTo('category'),
+  userId: attr('number')
 });
