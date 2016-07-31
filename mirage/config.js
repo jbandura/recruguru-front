@@ -20,6 +20,12 @@ export default function() {
   this.post('/challenges');
   this.put('/challenges/:id');
   this.del('/challenges/:id');
+
+  //
+  // CHALLENGE VOTES
+  //
+
+  this.get('/challenge_votes');
   // These comments are here to help you get started. Feel free to delete them.
 
   /*

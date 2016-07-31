@@ -12,5 +12,13 @@
     {{#if (can 'edit challenge' model=challenge)}}
       {{link-to "Edit" "challenges.edit" challenge.id class="js-edit-btn"}}
     {{/if}}
+    <p>
+      <span class="js-votes-count">
+        {{votes-count votes=votes challenge=challenge}}
+      </span>
+      <button class="js-upvote-btn" {{action (action onUpvote challenge)}}>
+        Upvote
+      </button>
+    </p>
   </div>
 {{/each}}

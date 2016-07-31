@@ -10,9 +10,10 @@ export default Session.extend({
       // for tests
       return this.get('data.authenticated.currentUser');
     }
-    return this.get('store').createRecord(
+    const user = this.get('store').createRecord(
       'user',
-      JSON.parse(this.get('data.authenticated.user'))
+      JSON.parse(this.get('data.authenticated.user')).user
     );
+    return user;
   })
 });

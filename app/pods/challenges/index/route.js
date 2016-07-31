@@ -4,13 +4,18 @@ import { task } from 'ember-concurrency';
 
 const {
   Route,
+  RSVP: { hash },
   inject: { service }
 } = Ember;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   flashMessages: service(),
+  session: service(),
   model() {
-    return this.store.findAll('challenge');
+    return hash({
+      challenges: this.store.findAll('challenge'),
+      votes: this.store.findAll('challenge-vote')
+    });
   },
 
   destroyChallengeTask: task(function * (challenge) {
@@ -22,9 +27,19 @@ export default Route.extend(AuthenticatedRouteMixin, {
     }
   }),
 
+  upvoteChallengeTask: task(function * (challengeId) {
+    const userId = this.get('session.currentUser.id');
+    const vote = this.store.createRecord('challenge-vote', { challengeId, userId });
+    yield vote.save();
+  }),
+
   actions: {
     onDeleteChallenge(challenge) {
       return this.get('destroyChallengeTask').perform(challenge);
+    },
+
+    onUpvoteChallenge(challenge) {
+      return this.get('upvoteChallengeTask').perform(challenge.get('id'));
     }
   }
 });
