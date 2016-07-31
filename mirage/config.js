@@ -19,6 +19,7 @@ export default function() {
   this.get('/challenges/:id');
   this.post('/challenges');
   this.put('/challenges/:id');
+  this.del('/challenges/:id');
   // These comments are here to help you get started. Feel free to delete them.
 
   /*

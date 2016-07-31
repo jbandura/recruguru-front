@@ -2,6 +2,7 @@ import { test } from 'qunit';
 import moduleForAcceptance from 'recruguru-front/tests/helpers/module-for-acceptance';
 import { authenticateSession } from 'recruguru-front/tests/helpers/ember-simple-auth';
 import Ember from 'ember';
+import { Response } from 'ember-cli-mirage';
 
 const userId = 3;
 
@@ -72,6 +73,26 @@ test('when clicking on delete button a proper request gets sent', function(asser
   });
 
   andThen(() => triggerEvent('.js-delete-btn:nth(0)', 'mousedown'));
+});
+
+test('after deleting of challenge a proper flash message is displayed', function(assert) {
+  assert.expect(1);
+  authAndVisit(this.application, { id: userId, isAdmin: true });
+
+  andThen(() => triggerEvent('.js-delete-btn:nth(0)', 'mousedown'));
+  andThen(() => assert.ok(find('.alert.alert-success').length) );
+});
+
+test('when error encountered while deleting a proper flash message is shown', function(assert) {
+  assert.expect(1);
+  authAndVisit(this.application, { id: userId, isAdmin: true });
+  const challengeToDelete = server.db.challenges[0];
+  server.del(`/challenges/${challengeToDelete.id}`, () => {
+    return new Response(500, {}, {errors: 'ups'});
+  });
+
+  andThen(() => triggerEvent('.js-delete-btn:nth(0)', 'mousedown'));
+  andThen(() => assert.ok(find('.alert.alert-danger').length) );
 });
 
 test('clicking on edit button takes me to edit route', function(assert) {
