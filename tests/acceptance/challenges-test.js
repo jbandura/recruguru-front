@@ -138,3 +138,21 @@ test('it doesnt allow voting twice for the same challenge for given user', funct
     assert.ok(voteBtn.length);
   });
 });
+
+test('when user voted on a challenge another click will revoke the vote', function(assert) {
+  let vote;
+  authAndVisit(this.application, { id: userId, isAdmin: true }, function() {
+    vote = server.create('challenge-vote', { userId, challengeId: votedChallenge.id});
+  });
+
+  server.del(`/challenge_votes/${vote.id}`, () => {
+    assert.ok(true, 'request was fired');
+  });
+
+  andThen(() => {
+    click('.js-challenge:nth(5) .js-revoke-vote');
+  });
+});
+
+
+//TODO: test that the votes amount is updated

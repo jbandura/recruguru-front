@@ -8,7 +8,7 @@ export default Session.extend({
   currentUser: computed('data.authenticated', function() {
     if(this.get('data.authenticated.currentUser')) {
       // for tests
-      return this.get('data.authenticated.currentUser');
+      return Ember.Object.create(this.get('data.authenticated.currentUser'));
     }
     const user = this.get('store').createRecord(
       'user',

@@ -21,7 +21,9 @@
           Upvote
         </button>
       {{else}}
-        <button class="js-revoke-vote" {{action (action onRevokeVote challenge)}}>
+        <button
+          class="js-revoke-vote"
+          {{action (action onRevokeVote challenge votes)}}>
           Revoke vote
         </button>
       {{/if}}

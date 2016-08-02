@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { task } from 'ember-concurrency';
+import { getVote } from 'recruguru-front/utils/get-vote';
 
 const {
   Route,
@@ -42,7 +43,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
       return this.get('upvoteChallengeTask').perform(challenge.get('id'));
     },
 
-    onRevokeVote(challenge) {
+    onRevokeVote(challenge, votes) {
+      const vote = getVote(challenge, votes, this.get('session.currentUser'));
+      // TODO: move to task
+      return vote.destroyRecord();
     }
   }
 });
