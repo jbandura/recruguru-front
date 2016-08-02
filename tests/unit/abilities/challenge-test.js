@@ -1,55 +1,46 @@
 import { moduleFor, test } from 'ember-qunit';
 import Ember from 'ember';
 
-moduleFor('ability:application-base', 'Unit | Ability | application-base');
+moduleFor('ability:challenge', 'Unit | Ability | challenge');
 
-test('it allows editing for the author', function(assert) {
-  const ability = this.subject();
-  ability.setProperties({
-    model: Ember.Object.create({ userId: 3 }),
-    session: {
-      currentUser: Ember.Object.create({ id: 3, isAdmin: false })
-    }
-  });
-  assert.ok(ability.get('canEdit'));
+const setupModel = (id) => {
+  return Ember.Object.create({ id });
+};
+
+const setupVotes = (attributes) => {
+  return Ember.A(attributes.map((attr) => {
+    return Ember.Object.create(attr);
+  }));
+};
+
+const currentUser = Ember.Object.create({
+  id: 1
 });
 
-test('it doesnt allow editing for other users', function(assert) {
+test('doesnt allow for voting if user voted already', function(assert) {
   const ability = this.subject();
+  const model = setupModel(1);
+
   ability.setProperties({
-    model: Ember.Object.create({ userId: 3 }),
-    session: {
-      currentUser: Ember.Object.create({ id: 5, isAdmin: false })
-    }
+    model,
+    session: { currentUser },
+    votes: setupVotes([{
+      userId: currentUser.get('id'),
+      challengeId: model.get('id')
+    }])
   });
-  assert.notOk(ability.get('canEdit'));
+  assert.notOk(ability.get('canVote'));
 });
 
-test('it allows editing of others items if youre admin', function(assert) {
+test('allows voting if user didnt yet vote', function(assert) {
   const ability = this.subject();
+  const model = setupModel(1);
+
   ability.setProperties({
-    model: Ember.Object.create({ userId: 3 }),
-    session: {
-      currentUser: Ember.Object.create({ id: 5, isAdmin: true })
-    }
+    model,
+    session: { currentUser },
+    votes: setupVotes([])
   });
-  assert.ok(ability.get('canEdit'));
+  assert.ok(ability.get('canVote'));
 });
 
-test('it allows deleting of items only for admins', function(assert) {
-  const ability = this.subject();
-  ability.setProperties({
-    model: Ember.Object.create({ userId: 3 }),
-    session: {
-      currentUser: Ember.Object.create({ id: 5, isAdmin: true })
-    }
-  });
-  assert.ok(ability.get('canDelete'), 'as admin I can delete category');
-  ability.setProperties({
-    model: Ember.Object.create({ userId: 3 }),
-    session: {
-      currentUser: Ember.Object.create({ id: 3, isAdmin: false })
-    }
-  });
-  assert.notOk(ability.get('canDelete'), 'as non admin I cannot delete category');
-});

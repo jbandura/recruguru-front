@@ -16,9 +16,15 @@
       <span class="js-votes-count">
         {{votes-count votes=votes challenge=challenge}}
       </span>
-      <button class="js-upvote-btn" {{action (action onUpvote challenge)}}>
-        Upvote
-      </button>
+      {{#if (can 'vote challenge' model=challenge votes=votes)}}
+        <button class="js-upvote-btn" {{action (action onUpvote challenge)}}>
+          Upvote
+        </button>
+      {{else}}
+        <button class="js-revoke-vote" {{action (action onRevokeVote challenge)}}>
+          Revoke vote
+        </button>
+      {{/if}}
     </p>
   </div>
 {{/each}}

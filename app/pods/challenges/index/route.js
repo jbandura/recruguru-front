@@ -40,6 +40,9 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
     onUpvoteChallenge(challenge) {
       return this.get('upvoteChallengeTask').perform(challenge.get('id'));
+    },
+
+    onRevokeVote(challenge) {
     }
   }
 });

@@ -5,12 +5,14 @@ import Ember from 'ember';
 import { Response } from 'ember-cli-mirage';
 
 const userId = 3;
+let votedChallenge;
 
-const authAndVisit = (app, userData) => {
+const authAndVisit = (app, userData, callback = function() {}) => {
   authenticateSession(app, { currentUser: Ember.Object.create(userData)});
   server.createList('challenge', 5, { userId: 5 });
-  const challenge = server.create('challenge', { userId });
-  server.createList('challenge-vote', 5, { challengeId: challenge.id });
+  votedChallenge = server.create('challenge', { userId });
+  server.createList('challenge-vote', 5, { challengeId: votedChallenge.id });
+  callback();
   visit('/challenges');
 };
 
@@ -123,5 +125,16 @@ test('it properly displays a list of votes for given challenge', function(assert
   andThen(() => {
     const votesAmount = find('.js-votes-count:nth(5)').text().trim();
     assert.equal(votesAmount, "5");
+  });
+});
+
+test('it doesnt allow voting twice for the same challenge for given user', function(assert) {
+  authAndVisit(this.application, { id: userId, isAdmin: true }, function() {
+    server.create('challenge-vote', { userId, challengeId: votedChallenge.id});
+  });
+
+  andThen(() => {
+    const voteBtn = find('.js-challenge:nth(5) .js-revoke-vote');
+    assert.ok(voteBtn.length);
   });
 });
