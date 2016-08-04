@@ -18,7 +18,7 @@
       </button>
     {{else}}
       <button
-        class="js-revoke-vote"
+        data-test={{hook "revoke-vote"}}
         {{action (action onRevokeVote challenge votes)}}>
         Revoke vote
       </button>

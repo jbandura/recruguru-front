@@ -135,7 +135,7 @@ test('it doesnt allow voting twice for the same challenge for given user', funct
   });
 
   andThen(() => {
-    const voteBtn = find('.js-challenge:nth(5) .js-revoke-vote');
+    const voteBtn = find(`.js-challenge:nth(5) ${hook('revoke-vote')}`);
     assert.ok(voteBtn.length);
   });
 });
@@ -151,12 +151,12 @@ test('when user voted on a challenge another click will revoke the vote', functi
   });
 
   andThen(() => {
-    click('.js-challenge:nth(5) .js-revoke-vote');
+    click(`.js-challenge:nth(5) ${hook('revoke-vote')}`);
   });
 });
 
-test('when user votes the amount of votes gets updated', function(assert) {
-  assert.expect(2);
+test('when user votes/revokes vote the amount of votes gets updated', function(assert) {
+  assert.expect(3);
   authAndVisit(this.application, { id: userId, isAdmin: true });
 
   andThen(() => {
@@ -165,5 +165,9 @@ test('when user votes the amount of votes gets updated', function(assert) {
   });
   andThen(() => {
     assert.equal(find(`${hook('votes-count')}:nth(0)`).text().trim(), '1');
+    click(`${hook('revoke-vote')}:nth(0)`);
+  });
+  andThen(() => {
+    assert.equal(find(`${hook('votes-count')}:nth(0)`).text().trim(), '0');
   });
 });
