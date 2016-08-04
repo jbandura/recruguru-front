@@ -15,5 +15,8 @@
     validate=v
     on-update=(action (mut formData.icon))
   }}
-  <button type="submit" disabled={{not formValid}}>Save</button>
+
+  <button type="submit" class="btn btn-primary" disabled={{not formValid}}>
+    Save
+  </button>
 {{/lf-form}}

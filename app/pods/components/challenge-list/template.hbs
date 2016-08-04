@@ -1,0 +1,11 @@
+{{link-to 'Add new' 'challenges.new' class="js-add btn btn-primary"}}
+
+{{#each challenges as |challenge|}}
+  {{challenge-item
+    challenge=challenge
+    votes=votes
+    onDeleteChallenge=onDeleteChallenge
+    onUpvote=onUpvote
+    onRevokeVote=onRevokeVote
+  }}
+{{/each}}

@@ -13,6 +13,13 @@ Router.map(function() {
     this.route('new');
     this.route('edit', { path: ':category_id/edit'});
   });
+
+  this.route('challenges', function() {
+    this.route('index', { path: '/' });
+    this.route('show', { path: ':challenge_id' });
+    this.route('edit', { path: ':challenge_id/edit' });
+    this.route('new');
+  });
 });
 
 export default Router;

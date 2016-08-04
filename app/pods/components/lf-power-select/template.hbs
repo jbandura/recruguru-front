@@ -1,0 +1,18 @@
+{{#lf-input-wrapper
+  errorMessages=errorMessages
+  label=label
+  labelComponent=labelComponent
+  errorMessagesComponent=errorMessagesComponent
+  showErrorMessages=validationStateVisible
+}}
+  {{#power-select
+    options=options
+    placeholder=placeholder
+    searchField=searchField
+    selected=property
+    onchange=(action 'onChange')
+    as |category|
+  }}
+    {{yield category}}
+  {{/power-select}}
+{{/lf-input-wrapper}}

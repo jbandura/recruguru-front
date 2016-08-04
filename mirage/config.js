@@ -10,6 +10,24 @@ export default function() {
   this.get('/categories/:id');
   this.post('/categories');
   this.put('/categories/:id');
+
+  //
+  // CHALLENGES
+  //
+
+  this.get('/challenges');
+  this.get('/challenges/:id');
+  this.post('/challenges');
+  this.put('/challenges/:id');
+  this.del('/challenges/:id');
+
+  //
+  // CHALLENGE VOTES
+  //
+
+  this.get('/challenge_votes');
+  this.post('/challenge_votes');
+  this.del('/challenge_votes/:id');
   // These comments are here to help you get started. Feel free to delete them.
 
   /*

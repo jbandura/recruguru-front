@@ -1,0 +1,46 @@
+{{#lf-form rules=rules onSubmit=(action onSubmit formData) as |v formValid|}}
+  <p class="js-category">
+    {{#lf-power-select
+      options=categories
+      placeholder='Select a category'
+      searchField="title"
+      label="Category"
+      name="category"
+      class="js-category"
+      property=challenge.category
+      on-update=(action (mut formData.category))
+      validate=v
+      as |category|
+    }}
+      {{category.title}}
+    {{/lf-power-select}}
+  </p>
+  {{lf-input
+    name="title"
+    class="js-title"
+    validate=v
+    property=challenge.title
+    on-update=(action (mut formData.title))
+  }}
+  {{lf-textarea
+    name="content"
+    class="js-content"
+    validate=v
+    property=challenge.content
+    on-update=(action (mut formData.content))
+  }}
+  <div class="js-content-preview">
+    {{md-text text=formData.content}}
+  </div>
+  {{lf-textarea
+    name="solution"
+    class="js-solution"
+    property=challenge.solution
+    on-update=(action (mut formData.solution))
+    validate=v
+  }}
+  <div class="js-solution-preview">
+    {{md-text text=formData.solution}}
+  </div>
+  <button type="submit" class="btn btn-primary" disabled={{not formValid}}>Save</button>
+{{/lf-form}}

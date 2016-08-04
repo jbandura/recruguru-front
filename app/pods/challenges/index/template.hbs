@@ -1,0 +1,8 @@
+<h1>Challenges</h1>
+{{challenge-list
+  challenges=model.challenges
+  votes=model.votes
+  onDeleteChallenge=(route-action 'onDeleteChallenge')
+  onUpvote=(route-action 'onUpvoteChallenge')
+  onRevokeVote=(route-action 'onRevokeVote')
+}}
