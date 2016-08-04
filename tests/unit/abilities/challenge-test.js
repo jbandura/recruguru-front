@@ -44,3 +44,20 @@ test('allows voting if user didnt yet vote', function(assert) {
   assert.ok(ability.get('canVote'));
 });
 
+test('reacts to change when votes aggregate gets changed', function(assert) {
+  const ability = this.subject();
+  const model = setupModel(1);
+
+  ability.setProperties({
+    model,
+    session: { currentUser },
+    votes: setupVotes([])
+  });
+  assert.ok(ability.get('canVote'));
+  ability.get('votes').pushObject(Ember.Object.create({
+      userId: currentUser.get('id'),
+      challengeId: model.get('id')
+  }));
+  assert.notOk(ability.get('canVote'));
+});
+

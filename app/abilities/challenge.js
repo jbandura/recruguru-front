@@ -4,7 +4,7 @@ import Ember from 'ember';
 const { computed } = Ember;
 
 export default ApplicationBaseAbility.extend({
-  canVote: computed('session.currentUser', 'votes', function() {
+  canVote: computed('session.currentUser', 'votes.[]', function() {
     const user = this.get('session.currentUser');
     const votes = this.get('votes');
     const challenge = this.get('model');

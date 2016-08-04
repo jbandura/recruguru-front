@@ -1,0 +1,26 @@
+  <div class="js-title">{{challenge.title}}</div>
+  {{link-to 'Show' 'challenges.show' challenge.id class="js-show"}}
+  {{#if (can 'delete challenge' model=challenge)}}
+    {{#hold-button type="rectangle" class="js-delete-btn" action=(action onDeleteChallenge challenge)}}
+      Hold to delete
+    {{/hold-button}}
+  {{/if}}
+  {{#if (can 'edit challenge' model=challenge)}}
+    {{link-to "Edit" "challenges.edit" challenge.id class="js-edit-btn"}}
+  {{/if}}
+  <p>
+    <span data-test={{hook "votes-count"}}>
+      {{count}}
+    </span>
+    {{#if (can 'vote challenge' model=challenge votes=votes)}}
+      <button class="js-upvote-btn" {{action (action onUpvote challenge)}}>
+        Upvote
+      </button>
+    {{else}}
+      <button
+        class="js-revoke-vote"
+        {{action (action onRevokeVote challenge votes)}}>
+        Revoke vote
+      </button>
+    {{/if}}
+  </p>

@@ -3,6 +3,7 @@ import moduleForAcceptance from 'recruguru-front/tests/helpers/module-for-accept
 import { authenticateSession } from 'recruguru-front/tests/helpers/ember-simple-auth';
 import Ember from 'ember';
 import { Response } from 'ember-cli-mirage';
+import { hook } from 'ember-hook';
 
 const userId = 3;
 let votedChallenge;
@@ -123,7 +124,7 @@ test('it properly displays a list of votes for given challenge', function(assert
   authAndVisit(this.application, { id: userId, isAdmin: true });
 
   andThen(() => {
-    const votesAmount = find('.js-votes-count:nth(5)').text().trim();
+    const votesAmount = find(`${hook('votes-count')}:nth(5)`).text().trim();
     assert.equal(votesAmount, "5");
   });
 });
@@ -154,5 +155,15 @@ test('when user voted on a challenge another click will revoke the vote', functi
   });
 });
 
+test('when user votes the amount of votes gets updated', function(assert) {
+  assert.expect(2);
+  authAndVisit(this.application, { id: userId, isAdmin: true });
 
-//TODO: test that the votes amount is updated
+  andThen(() => {
+    assert.equal(find(`${hook('votes-count')}:nth(0)`).text().trim(), '0');
+    click('.js-upvote-btn:nth(0)');
+  });
+  andThen(() => {
+    assert.equal(find(`${hook('votes-count')}:nth(0)`).text().trim(), '1');
+  });
+});
