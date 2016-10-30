@@ -2,7 +2,10 @@
 {{challenge-list
   challenges=model.challenges
   votes=model.votes
+  categories=model.categories
+  selectedCategory=selectedCategory
   onDeleteChallenge=(route-action 'onDeleteChallenge')
+  onCategoryChange=(action (mut category))
   onUpvote=(route-action 'onUpvoteChallenge')
   onRevokeVote=(route-action 'onRevokeVote')
 }}
