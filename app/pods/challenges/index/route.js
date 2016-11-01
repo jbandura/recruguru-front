@@ -15,6 +15,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   model() {
     return hash({
       challenges: this.store.findAll('challenge'),
+      categories: this.store.findAll('category'),
       votes: this.store.findAll('challenge-vote')
     });
   },

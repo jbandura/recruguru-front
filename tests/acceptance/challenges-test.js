@@ -3,14 +3,19 @@ import moduleForAcceptance from 'recruguru-front/tests/helpers/module-for-accept
 import { authenticateSession } from 'recruguru-front/tests/helpers/ember-simple-auth';
 import Ember from 'ember';
 import { Response } from 'ember-cli-mirage';
-import { hook } from 'ember-hook';
+import { hook, $hook } from 'ember-hook';
 
 const userId = 3;
 let votedChallenge;
+let challenge;
+let category;
 
 const authAndVisit = (app, userData, callback = function() {}) => {
   authenticateSession(app, { currentUser: Ember.Object.create(userData)});
   server.createList('challenge', 5, { userId: 5 });
+  category = server.create('category');
+  challenge = server.create('challenge', { category_id: category.id });
+
   votedChallenge = server.create('challenge', { userId });
   server.createList('challenge-vote', 5, { challengeId: votedChallenge.id });
   callback();
@@ -26,12 +31,12 @@ test('route exists', function(assert) {
 
 test('it displays a list of challenges', function(assert) {
   authAndVisit(this.application, { id: userId, isAdmin: true });
-  andThen(() => assert.equal(find('.js-challenge').length, 6));
+  andThen(() => assert.equal(find('.js-challenge').length, 7));
 });
 
 test('it displays a show link', function(assert) {
   authAndVisit(this.application, { id: userId, isAdmin: true });
-  andThen(() => assert.equal(find('.js-challenge .js-show').length, 6));
+  andThen(() => assert.equal(find('.js-challenge .js-show').length, 7));
 });
 
 test('it displays a create new link', function(assert) {
@@ -42,7 +47,7 @@ test('it displays a create new link', function(assert) {
 test('as a non admin I dont see any delete buttons', function(assert) {
   authAndVisit(this.application, { isAdmin: false });
   andThen(() => {
-    assert.equal(find('.js-challenge').length, 6);
+    assert.equal(find('.js-challenge').length, 7);
     assert.notOk(find('.js-delete-btn').length);
   });
 });
@@ -56,7 +61,7 @@ test('as an admin I can see edit buttons for all challenges', function(assert) {
   authAndVisit(this.application, { id: userId, isAdmin: true });
 
   andThen(() => {
-    assert.equal(find('.js-edit-btn').length, 6);
+    assert.equal(find('.js-edit-btn').length, 7);
   });
 });
 
@@ -124,7 +129,7 @@ test('it properly displays a list of votes for given challenge', function(assert
   authAndVisit(this.application, { id: userId, isAdmin: true });
 
   andThen(() => {
-    const votesAmount = find(`${hook('votes-count')}:nth(5)`).text().trim();
+    const votesAmount = find(`${hook('votes-count')}:nth(6)`).text().trim();
     assert.equal(votesAmount, "5");
   });
 });
@@ -135,7 +140,7 @@ test('it doesnt allow voting twice for the same challenge for given user', funct
   });
 
   andThen(() => {
-    const voteBtn = find(`.js-challenge:nth(5) ${hook('revoke-vote')}`);
+    const voteBtn = find(`.js-challenge:nth(6) ${hook('revoke-vote')}`);
     assert.ok(voteBtn.length);
   });
 });
@@ -151,7 +156,7 @@ test('when user voted on a challenge another click will revoke the vote', functi
   });
 
   andThen(() => {
-    click(`.js-challenge:nth(5) ${hook('revoke-vote')}`);
+    click(`.js-challenge:nth(6) ${hook('revoke-vote')}`);
   });
 });
 
@@ -169,5 +174,25 @@ test('when user votes/revokes vote the amount of votes gets updated', function(a
   });
   andThen(() => {
     assert.equal(find(`${hook('votes-count')}:nth(0)`).text().trim(), '0');
+  });
+});
+
+test('when category selected a proper query param is applied', function(assert) {
+  authAndVisit(this.application, { id: userId, isAdmin: true });
+  const category = server.db.categories[0];
+
+  andThen(() => {
+    selectChoose('.js-category', category.title);
+  });
+  andThen(() => {
+    const [ , categoryId ] = currentURL().split('=');
+    assert.equal(
+      categoryId,
+      category.id
+    );
+    assert.equal(
+      find($hook('challenge-item')).length,
+      1
+    );
   });
 });

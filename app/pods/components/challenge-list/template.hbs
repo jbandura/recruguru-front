@@ -1,11 +1,26 @@
 {{link-to 'Add new' 'challenges.new' class="js-add btn btn-primary"}}
 
-{{#each challenges as |challenge|}}
-  {{challenge-item
-    challenge=challenge
-    votes=votes
-    onDeleteChallenge=onDeleteChallenge
-    onUpvote=onUpvote
-    onRevokeVote=onRevokeVote
+<div class="js-category">
+  {{#power-select
+    options=(append (hash title="All" id="all") categories)
+    placeholder="Select category"
+    searchField="title"
+    selected=selectedCategory
+    onchange=(action 'onChange')
+    as |category|
   }}
+    {{category.title}}
+  {{/power-select}}
+</div>
+
+{{#each filteredChallenges as |challenge index|}}
+  <div data-test={{hook 'challenge-item' index=index}}>
+    {{challenge-item
+      challenge=challenge
+      votes=votes
+      onDeleteChallenge=onDeleteChallenge
+      onUpvote=onUpvote
+      onRevokeVote=onRevokeVote
+    }}
+  </div>
 {{/each}}
